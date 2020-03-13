@@ -41,7 +41,7 @@ public class LaserPointer : MonoBehaviour
         {
             line.SetPosition(1, new Vector3(0, 0, hit.distance));
 
-            pointerTr.position = hit.point;
+            pointerTr.position = hit.point + (hit.normal * 0.01f);
             pointerTr.rotation = Quaternion.LookRotation(hit.normal);
 
             currButton = hit.collider.gameObject;
