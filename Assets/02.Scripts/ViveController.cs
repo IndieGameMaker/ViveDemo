@@ -32,7 +32,8 @@ public class ViveController : MonoBehaviour
         {
             Vector2 pos = trackPadPosition.GetAxis(any);
             //Debug.LogFormat("TrackPad Position x={0}/y={1}", pos.x, pos.y);
-            Debug.Log($"Position x={pos.x} / y={pos.y}");
+
+            Debug.Log($"Position x={pos.x} / y={pos.y}"); 
         }
     }
 }
