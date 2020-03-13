@@ -9,6 +9,7 @@ public class LaserPointer : MonoBehaviour
     private SteamVR_Behaviour_Pose pose;
     private SteamVR_Input_Sources hand;
     private SteamVR_Action_Boolean trigger;
+    private SteamVR_Action_Boolean teleport;
 
     private LineRenderer line;
     public float distance = 10.0f;
@@ -23,8 +24,11 @@ public class LaserPointer : MonoBehaviour
     [SerializeField]
     private Transform pointerTr;
 
+    public float fadeTime = 0.2f;
+
     void Start()
     {
+        teleport = SteamVR_Actions.default_Teleport;
         pointerTr = GameObject.Find("Pointer").GetComponent<Transform>();
         tr = GetComponent<Transform>();
         pose = GetComponent<SteamVR_Behaviour_Pose>();
@@ -67,7 +71,19 @@ public class LaserPointer : MonoBehaviour
 
         }
 
+        if (teleport.GetLastStateUp(hand))
+        {
+            SteamVR_Fade.Start(Color.black, 0.0f);
+            StartCoroutine(this.Teleporting(hit.point));
+        }
+    }
 
+    IEnumerator Teleporting(Vector3 pos)
+    {
+        tr.parent.transform.position = pos;
+        yield return new WaitForSeconds(fadeTime);
+        SteamVR_Fade.Start(Color.clear, 0.2f);
+      
     }
 
     void CreateLine()
