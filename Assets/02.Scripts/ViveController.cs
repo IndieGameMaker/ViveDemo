@@ -47,4 +47,9 @@ public class ViveController : MonoBehaviour
             SteamVR_Actions.default_Haptic.Execute(0.1f, 0.2f, 50.0f, 0.5f, any);
         }
     }
+
+    public void OnButtonClick(string msg)
+    {
+        Debug.Log($"{msg} button clicked !!");
+    }
 }
