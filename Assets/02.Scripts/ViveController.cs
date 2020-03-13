@@ -10,6 +10,8 @@ public class ViveController : MonoBehaviour
     public SteamVR_Action_Boolean trigger;
     public SteamVR_Action_Boolean trackPadTouch;
     public SteamVR_Action_Vector2 trackPadPosition;
+    public SteamVR_Action_Boolean grab;  //
+    public SteamVR_Action_Vibration haptic;
 
     void Awake()
     {
@@ -18,6 +20,8 @@ public class ViveController : MonoBehaviour
         trigger = SteamVR_Actions.default_InteractUI;
         trackPadTouch = SteamVR_Actions.default_TrackPadTouch;
         trackPadPosition = SteamVR_Actions.default_TrackPadPosition;
+        grab = SteamVR_Actions.default_GrabGrip;
+        haptic = SteamVR_Actions.default_Haptic;
     }
 
     // Update is called once per frame
@@ -35,6 +39,12 @@ public class ViveController : MonoBehaviour
 
 
             Debug.Log($"Position x={pos.x} / y={pos.y}"); 
+        }
+
+        if (grab.GetStateDown(any))
+        {
+            Debug.Log("Grab Grip button");
+            SteamVR_Actions.default_Haptic.Execute(0.1f, 0.2f, 50.0f, 0.5f, any);
         }
     }
 }
