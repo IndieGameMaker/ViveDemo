@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Valve.VR;
 
 public class LaserPointer : MonoBehaviour
@@ -13,6 +14,9 @@ public class LaserPointer : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     private Transform tr;
+
+    private GameObject prevButton;
+    private GameObject currButton;
 
     void Start()
     {
@@ -29,7 +33,24 @@ public class LaserPointer : MonoBehaviour
         if (Physics.Raycast(ray, out hit, distance))
         {
             line.SetPosition(1, new Vector3(0, 0, hit.distance));
+
+            currButton = hit.collider.gameObject;
+            if (currButton != prevButton)
+            {
+                ExecuteEvents.Execute(currButton
+                                    , new PointerEventData(EventSystem.current)
+                                    , ExecuteEvents.pointerEnterHandler);
+
+                ExecuteEvents.Execute(prevButton
+                                    , new PointerEventData(EventSystem.current)
+                                    , ExecuteEvents.pointerExitHandler);
+
+                prevButton = currButton;
+            }
+
         }
+
+
     }
 
     void CreateLine()
