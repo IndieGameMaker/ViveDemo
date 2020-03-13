@@ -14,6 +14,8 @@ public class LaserPointer : MonoBehaviour
     {
         pose = GetComponent<SteamVR_Behaviour_Pose>();
         hand = pose.inputSource;
+
+        CreateLine();
     }
 
     void CreateLine()
@@ -23,5 +25,10 @@ public class LaserPointer : MonoBehaviour
         line.positionCount = 2;
         line.SetPosition(0, Vector3.zero);
         line.SetPosition(1, new Vector3(0, 0, distance));
+        line.startWidth = 0.05f;
+        line.endWidth = 0.005f;
+
+        line.material = new Material(Shader.Find("Unlit/Color"));
+        line.material.color = Color.blue;
     }
 }
