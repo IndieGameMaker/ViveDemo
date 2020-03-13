@@ -20,8 +20,12 @@ public class LaserPointer : MonoBehaviour
     private GameObject prevButton;
     private GameObject currButton;
 
+    [SerializeField]
+    private Transform pointerTr;
+
     void Start()
     {
+        pointerTr = GameObject.Find("Pointer").GetComponent<Transform>();
         tr = GetComponent<Transform>();
         pose = GetComponent<SteamVR_Behaviour_Pose>();
         hand = pose.inputSource;
@@ -36,6 +40,9 @@ public class LaserPointer : MonoBehaviour
         if (Physics.Raycast(ray, out hit, distance))
         {
             line.SetPosition(1, new Vector3(0, 0, hit.distance));
+
+            pointerTr.position = hit.point;
+            pointerTr.rotation = Quaternion.LookRotation(hit.normal);
 
             currButton = hit.collider.gameObject;
             if (currButton != prevButton)
