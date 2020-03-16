@@ -11,6 +11,7 @@ public class LaserPointer : MonoBehaviour
     private SteamVR_Action_Boolean trigger;
     private SteamVR_Action_Boolean teleport;
 
+
     private LineRenderer line;
     public float distance = 10.0f;
 
@@ -34,7 +35,7 @@ public class LaserPointer : MonoBehaviour
         pose = GetComponent<SteamVR_Behaviour_Pose>();
         hand = pose.inputSource;
         trigger = SteamVR_Actions.default_InteractUI;
-
+        
         CreateLine();
     }
 
