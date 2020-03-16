@@ -16,7 +16,8 @@ public class DrawMgr : MonoBehaviour
     void Start()
     {
         trigger = SteamVR_Actions.default_InteractUI;
-        rightHand = SteamVR_Input_Sources.RightHand;        
+        rightHand = SteamVR_Input_Sources.RightHand;  
+        pose = SteamVR_Actions.default_Pose;      
     }
 
     // Update is called once per frame
@@ -25,6 +26,13 @@ public class DrawMgr : MonoBehaviour
         if (trigger.GetStateDown(rightHand))
         {
             CreateLine();
+        }
+
+        if (trigger.GetState(rightHand))
+        {
+            Vector3 pos = pose.GetLocalPosition(rightHand);
+            ++line.positionCount;
+            line.SetPosition(line.positionCount-1, pos);
         }
     }
 
